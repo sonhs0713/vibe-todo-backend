@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const todosRouter = require('./routes/todos');
 
+
 const PORT = process.env.PORT || 5000;
 // 기본 DB를 test가 아닌 todo로 사용
 // 환경변수 이름은 mongo_uri 또는 MONGODB_URI 둘 다 지원
@@ -16,10 +17,23 @@ const MONGODB_URI =
 const app = express();
 
 // CORS 설정: 프런트엔드(origin)를 명시적으로 허용
-// 현재 프론트엔드 개발 서버 주소: http://localhost:5173 (Vite 기본 포트)
+// - 로컬 개발: http://localhost:5173
+// - 배포 프론트: https://vibe-todo-frontend-fawn.vercel.app
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://vibe-todo-frontend-fawn.vercel.app',
+];
+
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // 개발용: origin이 없을 때(null, Postman 등)도 허용
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
   })
 );
 
