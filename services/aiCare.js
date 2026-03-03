@@ -1,7 +1,7 @@
 const OpenAI = require('openai');
 
 const DEFAULT_MESSAGE =
-  '민준님, 오늘 과제 하느라 고생 많았어요. 남은 건 내일 에너지가 좋을 때 제가 대신 배치해 드릴게요!';
+  '오늘 과제 하느라 고생 많았어요. 남은 건 내일 에너지가 좋을 때 제가 대신 배치해 드릴게요!';
 
 let openaiClient = null;
 
@@ -41,7 +41,7 @@ async function createCareMessage({ name = '민준', title = '', count = 0 } = {}
       '5. 1~2문장, 최대 80자로 짧게 답변합니다.',
       '',
       '예시 톤:',
-      "민준님, 오늘 과제 하느라 고생 많았어요. 남은 건 내일 에너지가 좋을 때 제가 대신 배치해 드릴게요!",
+      "오늘 과제 하느라 고생 많았어요. 남은 건 내일 에너지가 좋을 때 제가 대신 배치해 드릴게요!",
     ]
       .filter(Boolean)
       .join('\n');
